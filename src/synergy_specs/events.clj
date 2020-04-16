@@ -89,3 +89,6 @@
    :eventData      (get event :synergy-specs.events/eventData)
    :eventTimestamp (get event :synergy-specs.events/eventTimestamp)
    })
+
+(defn generate-new-eventId []
+  (.toString (java.util.UUID/randomUUID)))
