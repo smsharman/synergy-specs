@@ -1,15 +1,24 @@
 (ns synergy-specs.events
-  (:require [clojure.spec.alpha :as s]
-            [clj-uuid :as uuid]))
+  (:refer-clojure :exclude (zero? range iterate max min contains? format))
+  (:require [clojure.spec.alpha :as s])
+  (:import (java.time.format DateTimeParseException)
+           (java.time Instant)
+           (java.util UUID)))
 
 (defn check-string-uuid? [input-uuid]
   "Check whether a given string is in UUID standard format or not"
   (try
-     (uuid? (java.util.UUID/fromString input-uuid))
+     (uuid? (UUID/fromString input-uuid))
      (catch IllegalArgumentException e
        false)))
 
-;; Synergy Event defintions
+(defn check-timestamp-instant? [input-timestamp]
+  (try
+     (inst? (Instant/parse input-timestamp))
+     (catch DateTimeParseException e
+       false)))
+
+;; Synergy Event definitions
 (s/def ::eventId (s/and string? #(check-string-uuid? %)))
 (s/def ::parentId (s/and string? #(check-string-uuid? %)))
 (s/def ::originId string?)
@@ -18,7 +27,7 @@
 (s/def ::eventVersion integer?)
 (s/def ::eventAction string?)
 (s/def ::eventData map?)
-(s/def ::eventTimestamp string?)
+(s/def ::eventTimestamp (s/and string? #(check-timestamp-instant? %)))
 
 (s/def ::synergyEvent (s/keys :req [
                                     ::eventId
@@ -44,7 +53,7 @@
                                :key1 "value1"
                                :key2 "value2"
                                }
-                   :synergy-specs.events/eventTimestamp "2018-10-09T12:24:03.390+0000"
+                   :synergy-specs.events/eventTimestamp "2020-04-17T11:23:10.904Z"
                    })
 
 (def testMessage2 {
@@ -59,7 +68,7 @@
                                                     :key1 "value1"
                                                     :key2 "value2"
                                                     }
-                   :eventTimestamp "2018-10-09T12:24:03.390+0000"
+                   :eventTimestamp "2020-04-17T11:23:10.904Z"
                    })
 
 (defn wrap-std-event [event]
@@ -91,4 +100,7 @@
    })
 
 (defn generate-new-eventId []
-  (.toString (java.util.UUID/randomUUID)))
+  (.toString (UUID/randomUUID)))
+
+(defn generate-new-timestamp []
+  (.toString (java.time.Instant/now)))
