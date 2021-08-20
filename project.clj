@@ -1,4 +1,4 @@
-(defproject synergy-specs "0.1.8"
+(defproject synergy-specs "0.1.9"
   :description "Synergy Events Core Library"
   :url "http://synergyxm.ai/about"
   :license {:name "Hackthorn Innovation copyright"
