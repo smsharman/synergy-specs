@@ -45,6 +45,7 @@ atlassian-ide-plugin.xml
 
 .idea/*
 *.iml
+synergy-specs.iml
 
 /target
 /classes
