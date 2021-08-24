@@ -54,3 +54,6 @@ pom.xml.asc
 /.nrepl-port
 .hgignore
 .hg/
+/.idea/misc.xml
+/.idea/runConfigurations.xml
+/synergy-specs.iml
