@@ -60,4 +60,4 @@ pom.xml.asc
 .hg/
 /.idea/misc.xml
 /.idea/runConfigurations.xml
-/synergy-specs.iml
+**/*.iml*
