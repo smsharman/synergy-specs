@@ -5,8 +5,9 @@
            (java.time Instant)
            (java.util UUID)))
 
-(defn check-string-uuid? [input-uuid]
+(defn check-string-uuid?
   "Check whether a given string is in UUID standard format or not"
+  [input-uuid]
   (try
      (uuid? (UUID/fromString input-uuid))
      (catch IllegalArgumentException e
@@ -41,38 +42,9 @@
                                     ::eventTimestamp
                                     ]))
 
-(def testMessage1 {
-                   :synergy-specs.events/eventId "7a5a815b-2e52-4d40-bec8-c3fc06edeb36"
-                   :synergy-specs.events/parentId "7a5a815b-2e52-4d40-bec8-c3fc06edeb36"
-                   :synergy-specs.events/originId "7a5a815b-2e52-4d40-bec8-c3fc06edeb36"
-                   :synergy-specs.events/userId "1"
-                   :synergy-specs.events/orgId "1"
-                   :synergy-specs.events/eventVersion 1
-                   :synergy-specs.events/eventAction "event1"
-                   :synergy-specs.events/eventData {
-                               :key1 "value1"
-                               :key2 "value2"
-                               }
-                   :synergy-specs.events/eventTimestamp "2020-04-17T11:23:10.904Z"
-                   })
-
-(def testMessage2 {
-                   :eventId "7a5a815b-2e52-4d40-bec8-c3fc06edeb36"
-                   :parentId "7a5a815b-2e52-4d40-bec8-c3fc06edeb36"
-                   :originId "7a5a815b-2e52-4d40-bec8-c3fc06edeb36"
-                   :userId "1"
-                   :orgId "1"
-                   :eventVersion 1
-                   :eventAction "event1"
-                   :eventData {
-                                                    :key1 "value1"
-                                                    :key2 "value2"
-                                                    }
-                   :eventTimestamp "2020-04-17T11:23:10.904Z"
-                   })
-
-(defn wrap-std-event [event]
+(defn wrap-std-event
   "Cast transport message into namespaced message"
+  [event]
   {
    :synergy-specs.events/eventId        (get event :eventId)
    :synergy-specs.events/parentId       (get event :parentId)
@@ -85,8 +57,9 @@
    :synergy-specs.events/eventTimestamp (get event :eventTimestamp)
    })
 
-(defn unwrap-std-event [event]
+(defn unwrap-std-event
   "Cast transport message into namespaced message"
+  [event]
   {
    :eventId        (get event :synergy-specs.events/eventId)
    :parentId       (get event :synergy-specs.events/parentId)
@@ -103,4 +76,4 @@
   (.toString (UUID/randomUUID)))
 
 (defn generate-new-timestamp []
-  (.toString (java.time.Instant/now)))
+  (.toString (Instant/now)))
