@@ -3,5 +3,4 @@
   :url "http://synergyxm.ai/about"
   :license {:name "Hackthorn Innovation copyright"
             :url "http://hackthorn.ai/synergy-specs"}
-  :dependencies [[org.clojure/clojure "1.10.1"]]
-  :main synergy-specs.events)
+  :dependencies [[org.clojure/clojure "1.10.1"]])
